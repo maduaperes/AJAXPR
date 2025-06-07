@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="usuarioLogado"></div>
+    <div class="container">
+        <div class="logo">
+            <h1>Login</h1>
+        </div>
+
+        <h2>Entrar na sua conta</h2>
+
+        <form id="formLogin" autocomplete="off">
+            <div class="input-group">
+                <label for="loginEmail">E-mail</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="loginEmail" placeholder="seuemail@exemplo.com" required />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="loginSenha">Senha</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="loginSenha" placeholder="••••••••" required />
+                </div>
+            </div>
+
+            <button type="submit" class="btn-entrar">Entrar</button>
+        </form>
+
+        <div id="msgLogin" class="message"></div>
+
+        <div class="register-link">
+            <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+
+</html>

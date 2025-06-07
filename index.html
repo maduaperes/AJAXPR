@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Usuários</title>
+</head>
+
+<body>
+    <!-- Área do usuário logado com botões -->
+    <div id="usuarioLogado"></div>
+
+    <h1>Gestão de Usuários</h1>
+
+    <form id="formUser">
+        <input type="hidden" id="idUsuario" />
+        <input type="text" id="name" placeholder="Informe o nome" />
+        <input type="text" id="email" placeholder="Informe o e-mail" />
+        <input type="text" id="cargo" placeholder="Informe o cargo" />
+        <button type="submit">Salvar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Cargo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="ListaUsuarios"></tbody>
+    </table>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

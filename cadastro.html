@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="logo">
+            <h1>Cadastro</h1>
+        </div>
+
+        <h2>Crie sua conta</h2>
+
+        <form id="formCadastro" autocomplete="off">
+            <div class="input-group">
+                <label for="nome">Nome</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="nome" placeholder="Seu nome completo" />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="cadastroEmail">E-mail</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="cadastroEmail" placeholder="seuemail@exemplo.com" />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="cadastroSenha">Senha</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="cadastroSenha" placeholder="Crie uma senha" />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="cargo">Cargo</label>
+                <select id="cargo">
+                    <option value="">Selecione o cargo</option>
+                    <option value="administrador">Administrador</option>
+                    <option value="supervisor">Supervisor</option>
+                    <option value="funcionario">Funcionário</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-entrar">Cadastrar</button>
+        </form>
+
+        <div id="msgCadastro" class="message"></div>
+
+        <div class="register-link">
+            <p>Já tem uma conta? <a href="login.html">Entrar</a></p>
+        </div>
+    </div>
+
+    <script src="js/cadastro.js"></script>
+</body>
+
+</html>

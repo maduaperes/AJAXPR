@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.logo h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 28px;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #555;
+    font-size: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.input-icon {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.input-icon i {
+    margin-right: 10px;
+    color: #999;
+}
+
+.input-icon input,
+.input-icon select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    font-size: 15px;
+    color: #333;
+}
+
+.btn-entrar {
+    width: 100%;
+    padding: 10px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-entrar:hover {
+    background-color: #2563eb;
+}
+
+.message {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.message.success {
+    color: green;
+}
+
+.message.error {
+    color: red;
+}
+
+.register-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}

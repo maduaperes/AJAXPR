@@ -1,0 +1,34 @@
+{
+  "usuarios": [
+    {
+      "name": "Maria",
+      "email": "maria@hotmail.com",
+      "cargo": "Administrador",
+      "id": "5e33"
+    },
+    {
+      "name": "Gabriel",
+      "email": "gabriel@hotmail.com",
+      "cargo": "Supervisor",
+      "id": "1aea"
+    },
+    {
+      "name": "Amanda",
+      "email": "amanda@hotmail.com",
+      "cargo": "Funcionário",
+      "id": "d77a"
+    },
+    {
+      "name": "Lucas",
+      "email": "lucas@hotmail.com",
+      "cargo": "Supervisor",
+      "id": "0ebd"
+    },
+    {
+      "name": "Isabely",
+      "email": "isabely@hotmail.com",
+      "cargo": "Funcionário",
+      "id": "cedd"
+    }
+  ]
+}
