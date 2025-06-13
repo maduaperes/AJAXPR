@@ -4,7 +4,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #4f8ef7, #2b64c5);
     height: 100vh;
     margin: 0;
     display: flex;
@@ -24,7 +24,7 @@ body {
 
 .logo h1 {
     margin-bottom: 20px;
-    color: #764ba2;
+    color: #4f8ef7;
 }
 
 h2 {
@@ -68,13 +68,13 @@ h2 {
 }
 
 .input-icon input:focus {
-    border-color: #764ba2;
+    border-color: #4f8ef7;
     outline: none;
 }
 
 .btn-entrar {
     width: 100%;
-    background: #764ba2;
+    background: #4f8ef7;
     border: none;
     color: white;
     font-weight: 700;
@@ -87,7 +87,7 @@ h2 {
 }
 
 .btn-entrar:hover {
-    background: #5e398f;
+    background: #4f8ef7;
 }
 
 .message {
@@ -111,7 +111,7 @@ h2 {
 }
 
 .register-link a {
-    color: #764ba2;
+    color: #4f8ef7;
     text-decoration: none;
     font-weight: 600;
 }

@@ -6,7 +6,6 @@ $(document).ready(function () {
         const senha = $('#loginSenha').val().trim();
         const $msg = $('#msgLogin');
 
-        // Limpa mensagem anterior
         $msg.text('').removeClass('success error');
 
         if (!email || !senha) {
@@ -14,16 +13,25 @@ $(document).ready(function () {
             return;
         }
 
-        // Simula autenticação básica (troque isso por chamada real de API)
-        if (email === 'maria@hotmail.com' && senha === 'maria123') {
+        let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+        const usuarioEncontrado = usuarios.find(u => u.email === email && u.senha === senha);
+
+        if (usuarioEncontrado) {
             $msg.text('Login efetuado com sucesso!').addClass('success');
+            localStorage.setItem('usuarioLogado', usuarioEncontrado.email);
+            localStorage.setItem('cargoUsuario', usuarioEncontrado.cargo || '');
 
-            // Salva o login no localStorage (pode ser usado em outras páginas)
-            localStorage.setItem('usuarioLogado', email);
-
-            // Redireciona após 1.5 segundos
             setTimeout(() => {
-                window.location.href = 'index.html';
+                if (usuarioEncontrado.email === 'amanda@hotmail.com') {
+                    window.location.href = 'funcionario.html';
+                } else if (usuarioEncontrado.email === 'gabriel@hotmail.com') {
+                    window.location.href = 'supervisor.html';
+                } else if (usuarioEncontrado.email === 'maria@hotmail.com') {
+                    window.location.href = 'index.html';
+                } else {
+                    window.location.href = 'erro.html';
+                }
             }, 1500);
         } else {
             $msg.text('E-mail ou senha inválidos').addClass('error');

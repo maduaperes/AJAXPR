@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const API_URL = "http://localhost:3000/usuarios";
+    const API_URL = "http://localhost:4000/usuarios";
 
     // Pega o usuário logado do localStorage ou usa 'Visitante'
     let usuarioLogado = localStorage.getItem('usuarioLogado') || null;
@@ -36,7 +36,7 @@ $(document).ready(function () {
         localStorage.removeItem('usuarioLogado');
         usuarioLogado = null;
         mostrarUsuarioLogado();
-        window.location.href = 'index.html'; // Ou outra página inicial
+        window.location.href = 'erro.html'; // Ou outra página inicial
     });
 
     // Função para listar usuários da API

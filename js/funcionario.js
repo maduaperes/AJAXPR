@@ -1,10 +1,8 @@
 $(document).ready(function () {
-    const API_URL = "http://localhost:3000/usuarios";
+    const API_URL = "http://localhost:4000/usuarios";
 
-    // Pega o usuário logado do localStorage ou usa 'Visitante'
     let usuarioLogado = localStorage.getItem('usuarioLogado') || null;
 
-    // Função para mostrar o usuário logado e os botões
     function mostrarUsuarioLogado() {
         if (usuarioLogado) {
             $("#usuarioLogado").html(`
@@ -22,24 +20,20 @@ $(document).ready(function () {
 
     mostrarUsuarioLogado();
 
-    // Evento para trocar usuário (apaga login e redireciona)
     $(document).on('click', '#btnTrocarUsuario', function () {
         localStorage.removeItem('usuarioLogado');
         usuarioLogado = null;
         mostrarUsuarioLogado();
-        // Redireciona para a página de login (altere se for outra URL)
         window.location.href = 'login.html';
     });
 
-    // Evento para sair (apaga login e redireciona)
     $(document).on('click', '#btnSair', function () {
         localStorage.removeItem('usuarioLogado');
         usuarioLogado = null;
         mostrarUsuarioLogado();
-        window.location.href = 'index.html'; // Ou outra página inicial
+        window.location.href = 'erro.html';
     });
 
-    // Função para listar usuários da API
     function listarUsuarios() {
         $.ajax({
             url: API_URL,
@@ -47,19 +41,24 @@ $(document).ready(function () {
             dataType: "json",
             success: function (dados) {
                 let tabela = "";
-                dados.forEach(usuario => {
+
+                const usuarioAtual = dados.find(u => u.email === usuarioLogado);
+
+                if (usuarioAtual) {
                     tabela += `
                         <tr>
-                            <td>${usuario.name}</td>
-                            <td>${usuario.email}</td>
-                            <td>${usuario.cargo || ''}</td>
+                            <td>${usuarioAtual.name}</td>
+                            <td>${usuarioAtual.email}</td>
+                            <td>${usuarioAtual.cargo || ''}</td>
                             <td>
-                                <button class="editar" data-id="${usuario.id}">Editar</button>
-                                <button class="excluir" data-id="${usuario.id}">Excluir</button>
+                                <button class="editar" data-id="${usuarioAtual.id}">Editar</button>
                             </td>
                         </tr>
                     `;
-                });
+                } else {
+                    tabela += `<tr><td colspan="4">Usuário não encontrado.</td></tr>`;
+                }
+
                 $("#ListaUsuarios").html(tabela);
             },
             error: function () {
@@ -70,7 +69,6 @@ $(document).ready(function () {
 
     listarUsuarios();
 
-    // Salvar ou editar usuário
     $("#formUser").submit(function (e) {
         e.preventDefault();
 
@@ -87,7 +85,6 @@ $(document).ready(function () {
         const dadosUser = { name, email, cargo };
 
         if (id) {
-            // Editar usuário existente
             $.ajax({
                 url: `${API_URL}/${id}`,
                 method: "PUT",
@@ -103,41 +100,11 @@ $(document).ready(function () {
                 }
             });
         } else {
-            // Criar novo usuário
-            $.ajax({
-                url: API_URL,
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(dadosUser),
-                success: function () {
-                    $('#formUser')[0].reset();
-                    listarUsuarios();
-                },
-                error: function () {
-                    alert("Erro ao cadastrar usuário.");
-                }
-            });
+            // Bloqueia criação de novo usuário via frontend
+            alert("Você não pode criar novos usuários.");
         }
     });
 
-    // Excluir usuário
-    $(document).on('click', '.excluir', function () {
-        if (!confirm("Tem certeza que deseja excluir este usuário?")) return;
-
-        const id = $(this).data("id");
-        $.ajax({
-            url: `${API_URL}/${id}`,
-            method: "DELETE",
-            success: function () {
-                listarUsuarios();
-            },
-            error: function () {
-                alert("Erro ao excluir usuário.");
-            }
-        });
-    });
-
-    // Carregar dados do usuário para editar
     $(document).on('click', '.editar', function () {
         const id = $(this).data("id");
         $.ajax({
@@ -145,10 +112,15 @@ $(document).ready(function () {
             method: "GET",
             dataType: "json",
             success: function (usuario) {
-                $('#idUsuario').val(usuario.id);
-                $('#name').val(usuario.name);
-                $('#email').val(usuario.email);
-                $('#cargo').val(usuario.cargo || '');
+                // Garante que o usuário só edita a si mesmo
+                if (usuario.email === usuarioLogado) {
+                    $('#idUsuario').val(usuario.id);
+                    $('#name').val(usuario.name);
+                    $('#email').val(usuario.email);
+                    $('#cargo').val(usuario.cargo || '');
+                } else {
+                    alert("Você só pode editar seus próprios dados.");
+                }
             },
             error: function () {
                 alert("Erro ao carregar usuário.");

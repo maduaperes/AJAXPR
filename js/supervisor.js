@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    const API_URL = "http://localhost:3000/usuarios";
+    const API_URL = "http://localhost:4000/usuarios";
 
-    // Pega o usuário logado do localStorage ou usa 'Visitante'
+    // Pega usuário logado do localStorage
     let usuarioLogado = localStorage.getItem('usuarioLogado') || null;
 
-    // Função para mostrar o usuário logado e os botões
+    // Função para mostrar área do usuário logado e botões
     function mostrarUsuarioLogado() {
         if (usuarioLogado) {
             $("#usuarioLogado").html(`
@@ -22,24 +22,23 @@ $(document).ready(function () {
 
     mostrarUsuarioLogado();
 
-    // Evento para trocar usuário (apaga login e redireciona)
+    // Evento: Trocar usuário (logout e vai para login)
     $(document).on('click', '#btnTrocarUsuario', function () {
         localStorage.removeItem('usuarioLogado');
         usuarioLogado = null;
         mostrarUsuarioLogado();
-        // Redireciona para a página de login (altere se for outra URL)
-        window.location.href = 'login.html';
+        window.location.href = 'erro.html';
     });
 
-    // Evento para sair (apaga login e redireciona)
+    // Evento: Sair (logout e vai para página inicial)
     $(document).on('click', '#btnSair', function () {
         localStorage.removeItem('usuarioLogado');
         usuarioLogado = null;
         mostrarUsuarioLogado();
-        window.location.href = 'index.html'; // Ou outra página inicial
+        window.location.href = 'index.html';
     });
 
-    // Função para listar usuários da API
+    // Função para listar usuários
     function listarUsuarios() {
         $.ajax({
             url: API_URL,
@@ -47,19 +46,42 @@ $(document).ready(function () {
             dataType: "json",
             success: function (dados) {
                 let tabela = "";
-                dados.forEach(usuario => {
+                // Busca usuário logado nos dados para identificar cargo
+                const usuarioAtual = dados.find(u => u.email === usuarioLogado);
+
+                if (!usuarioAtual) {
+                    $("#ListaUsuarios").html('<tr><td colspan="4">Usuário não encontrado.</td></tr>');
+                    return;
+                }
+
+                // Se for supervisor, lista todos, mas só pode editar o próprio
+                if (usuarioAtual.cargo && usuarioAtual.cargo.toLowerCase() === 'supervisor') {
+                    dados.forEach(usuario => {
+                        tabela += `
+                            <tr>
+                                <td>${usuario.name}</td>
+                                <td>${usuario.email}</td>
+                                <td>${usuario.cargo || ''}</td>
+                                <td>
+                                    ${usuario.email === usuarioLogado ? `<button class="editar" data-id="${usuario.id}">Editar</button>` : ''}
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    // Se for outro cargo, mostra só ele mesmo
                     tabela += `
                         <tr>
-                            <td>${usuario.name}</td>
-                            <td>${usuario.email}</td>
-                            <td>${usuario.cargo || ''}</td>
+                            <td>${usuarioAtual.name}</td>
+                            <td>${usuarioAtual.email}</td>
+                            <td>${usuarioAtual.cargo || ''}</td>
                             <td>
-                                <button class="editar" data-id="${usuario.id}">Editar</button>
-                                <button class="excluir" data-id="${usuario.id}">Excluir</button>
+                                <button class="editar" data-id="${usuarioAtual.id}">Editar</button>
                             </td>
                         </tr>
                     `;
-                });
+                }
+
                 $("#ListaUsuarios").html(tabela);
             },
             error: function () {
@@ -70,7 +92,7 @@ $(document).ready(function () {
 
     listarUsuarios();
 
-    // Salvar ou editar usuário
+    // Formulário salvar/editar usuário
     $("#formUser").submit(function (e) {
         e.preventDefault();
 
@@ -86,8 +108,13 @@ $(document).ready(function () {
 
         const dadosUser = { name, email, cargo };
 
+        // Confirma que só pode editar próprio usuário
         if (id) {
-            // Editar usuário existente
+            if (email !== usuarioLogado) {
+                alert("Você só pode editar seus próprios dados.");
+                return;
+            }
+
             $.ajax({
                 url: `${API_URL}/${id}`,
                 method: "PUT",
@@ -97,54 +124,57 @@ $(document).ready(function () {
                     $('#formUser')[0].reset();
                     $('#idUsuario').val('');
                     listarUsuarios();
+                    alert("Dados atualizados com sucesso.");
                 },
                 error: function () {
                     alert("Erro ao atualizar usuário.");
                 }
             });
         } else {
-            // Criar novo usuário
-            $.ajax({
-                url: API_URL,
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(dadosUser),
-                success: function () {
-                    $('#formUser')[0].reset();
-                    listarUsuarios();
-                },
-                error: function () {
-                    alert("Erro ao cadastrar usuário.");
-                }
-            });
+            alert("Você não pode criar novos usuários.");
         }
     });
 
-    // Excluir usuário
+    // Excluir usuário (opcional - só supervisor pode excluir?)
     $(document).on('click', '.excluir', function () {
-        if (!confirm("Tem certeza que deseja excluir este usuário?")) return;
-
         const id = $(this).data("id");
-        $.ajax({
-            url: `${API_URL}/${id}`,
-            method: "DELETE",
-            success: function () {
-                listarUsuarios();
-            },
-            error: function () {
-                alert("Erro ao excluir usuário.");
-            }
-        });
+
+        if (!id) return;
+
+        // Só supervisor pode excluir (se quiser)
+        // Para simplificar, bloqueio exclui pra todos aqui
+        alert("Você não tem permissão para excluir usuários.");
+        // Para liberar exclusão só para supervisor, adicione checagem do cargo
+
+        // if (confirm("Tem certeza que deseja excluir este usuário?")) {
+        //     $.ajax({
+        //         url: `${API_URL}/${id}`,
+        //         method: "DELETE",
+        //         success: function () {
+        //             listarUsuarios();
+        //         },
+        //         error: function () {
+        //             alert("Erro ao excluir usuário.");
+        //         }
+        //     });
+        // }
     });
 
-    // Carregar dados do usuário para editar
+    // Botão editar carrega dados no formulário
     $(document).on('click', '.editar', function () {
         const id = $(this).data("id");
+
+        if (!id) return;
+
         $.ajax({
             url: `${API_URL}/${id}`,
             method: "GET",
             dataType: "json",
             success: function (usuario) {
+                if (usuario.email !== usuarioLogado) {
+                    alert("Você só pode editar seus próprios dados.");
+                    return;
+                }
                 $('#idUsuario').val(usuario.id);
                 $('#name').val(usuario.name);
                 $('#email').val(usuario.email);
@@ -155,5 +185,4 @@ $(document).ready(function () {
             }
         });
     });
-
 });
