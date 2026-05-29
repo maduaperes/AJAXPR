@@ -1,193 +1,111 @@
 # AJAXPR
 
 ## Visão Geral
-
-O **AJAXPR** é um sistema web desenvolvido com HTML, CSS e JavaScript que simula um ambiente com múltiplos níveis de acesso (cadastro, login, funcionário e supervisor). O projeto utiliza um arquivo JSON como banco de dados simulado e realiza operações de leitura e escrita de dados via AJAX.
-
-O sistema é dividido em páginas independentes e scripts específicos para cada funcionalidade, permitindo uma arquitetura modular e organizada.
+O **AJAXPR** é um ecossistema web desenvolvido com tecnologias front-end nativas (HTML5, CSS3 e JavaScript) voltado para a simulação de um ambiente de controle de acesso multiperfil (Cadastro, Login, Funcionário e Supervisor). A aplicação implementa o consumo assíncrono de dados através de requisições AJAX, utilizando um arquivo estruturado JSON local como repositório de dados simulado para gerenciar fluxos de validação e permissões de usuários.
 
 ---
 
-## Funcionalidades
-
-- Autenticação de usuários (login)
-- Cadastro de novos usuários
-- Controle de acesso por perfil (funcionário e supervisor)
-- Painel de supervisor com maior nível de permissão
-- Área de visualização para funcionários
-- Sistema de redirecionamento em caso de erro
-- Integração com banco de dados simulado (`db.json`)
-- Comunicação via AJAX para manipulação de dados
+## Funcionalidades Principais
+* **Autenticação Multiperfil:** Mecanismo de validação de credenciais com redirecionamento dinâmico baseado no nível de privilégio (Funcionário ou Supervisor).
+* **Comunicação Assíncrona via AJAX:** Atualização parcial de dados e validações estruturais sem a necessidade de recarregamento completo das páginas.
+* **Persistência de Dados Simulada:** Simulação de operações de leitura de dados de usuários centralizadas em um arquivo JSON local.
+* **Arquitetura Modularizada:** Distribuição isolada de responsabilidades onde cada view possui sua própria folha de estilo e script de comportamento dedicados.
+* **Tratamento de Rotas Inválidas:** Filtro básico de segurança que direciona o fluxo de navegação para uma página de erro customizada em caso de exceções ou falhas de autenticação.
 
 ---
 
-## Estrutura de Pastas e Arquivos
+## Tecnologias e Conceitos Utilizados
+* **Estruturação de Views:** HTML5 Semântico
+* **Design e Identidade Visual:** CSS3 com estilização modularizada por escopo de tela
+* **Programação e Comportamento:** JavaScript Nativo (Vanilla JS) com manipulação ativa da árvore do DOM
+* **Protocolo de Comunicação:** AJAX (XMLHttpRequest ou Fetch API) para tráfego assíncrono de requisições
+* **Formato de Dados:** JSON (JavaScript Object Notation) para representação de registros
 
-```
+---
 
+## Estrutura do Projeto
+Organização dos pacotes, arquivos e diretórios que compõem o repositório:
+
+```text
 AJAXPRDB/
-│
-├── cadastro.html
-├── erro.html
-├── funcionario.html
-├── index.html
-├── login.html
-├── supervisor.html
-│
-├── css/
+├── css/                 # Folhas de estilo segregadas por escopo de interface
 │   ├── cadastro.css
 │   ├── erro.css
 │   ├── funcionario.css
 │   ├── login.css
 │   ├── style.css
-│   ├── supervisor.css
-│
-├── js/
-│   ├── app.js
-│   ├── cadastro.js
-│   ├── funcionario.js
-│   ├── login.js
-│   ├── supervisor.js
-│   └── content loaded
-│
-├── db/
-│   └── db.json
-│
-└── .gitattributes
+│   └── supervisor.css
+├── db/                  # Camada de persistência local simulada
+│   └── db.json          # Base de dados estruturada contendo registros de usuários
+├── js/                  # Camada de comportamento e regras de validação
+│   ├── app.js           # Script de inicialização e configurações globais
+│   ├── cadastro.js      # Gerenciamento de eventos de formulário de registro
+│   ├── funcionario.js   # Lógica e renderização do painel do funcionário
+│   ├── login.js         # Validação de credenciais e controle de sessão local
+│   └── supervisor.js    # Controle do painel administrativo de alta permissão
+├── cadastro.html        # Interface de registro de novos usuários
+├── erro.html            # Tela de tratamento de exceções de acesso
+├── funcionario.html     # Painel de operações de nível operacional
+├── index.html           # Ponto de entrada e roteador inicial da aplicação
+├── login.html           # Interface de autenticação de usuários
+└── supervisor.html      # Painel de controle de nível administrativo
 
-````
-
----
-
-## Tecnologias Utilizadas
-
-- HTML5
-- CSS3
-- JavaScript (Vanilla JS)
-- AJAX (requisições assíncronas)
-- JSON (simulação de banco de dados)
+```
 
 ---
 
-## Módulos do Sistema
+## Fluxo Operacional do Sistema
 
-### Páginas
-- **index.html**: Página inicial do sistema  
-- **login.html**: Autenticação de usuários  
-- **cadastro.html**: Registro de novos usuários  
-- **funcionario.html**: Área do funcionário  
-- **supervisor.html**: Painel administrativo  
-- **erro.html**: Página de erro ou acesso inválido  
+1. O usuário acessa a raiz da aplicação através do arquivo `index.html`.
+2. O sistema executa uma rotina de verificação inicial e redireciona o fluxo para a tela de autenticação (`login.html`).
+3. Após a submissão do formulário, uma requisição AJAX valida os dados informados contra o arquivo `db/db.json`:
+* Credenciais associadas ao perfil de Operador direcionam o usuário para `funcionario.html`.
+* Credenciais associadas ao perfil de Administrador direcionam o usuário para `supervisor.html`.
 
----
 
-## JavaScript
-
-- **app.js**: Inicialização geral do sistema  
-- **login.js**: Autenticação e validação de login  
-- **cadastro.js**: Cadastro de usuários e envio ao `db.json`  
-- **funcionario.js**: Lógica da área do funcionário  
-- **supervisor.js**: Funções do painel administrativo  
-- **content loaded**: Inicialização automática após carregamento da página  
+4. Tentativas de acesso direto a páginas restritas sem tokens de validação ativos disparam o carregamento da view `erro.html`.
 
 ---
 
-## CSS
+## Como Executar o Projeto
 
-- **style.css**: Estilos globais  
-- **login.css**: Estilização do login  
-- **cadastro.css**: Estilização do cadastro  
-- **funcionario.css**: Estilização da área do funcionário  
-- **supervisor.css**: Estilos do painel supervisor  
-- **erro.css**: Estilização da página de erro  
-
----
-
-## Banco de Dados (Simulado)
-
-O arquivo `db/db.json` funciona como um banco de dados local simulado, armazenando informações como:
-
-- Usuários cadastrados
-- Perfis de acesso
-- Dados utilizados pelas páginas do sistema
-
-Esse arquivo é manipulado via AJAX para simular operações de backend.
-
----
-
-## Fluxo do Sistema
-
-1. Usuário acessa `index.html`
-2. É redirecionado para `login.html`
-3. Após autenticação:
-   - Funcionário → `funcionario.html`
-   - Supervisor → `supervisor.html`
-4. Cadastro pode ser feito via `cadastro.html`
-5. Erros levam para `erro.html`
-
----
-
-## Como Executar
-
-### 1. Clonar o projeto
+1. **Clonar o repositório:**
 ```bash
-git clone <url-do-repositorio>
-````
-
-### 2. Abrir em servidor local
-
-Recomendado usar:
-
-* Live Server (VS Code)
-* XAMPP / Apache
-* Qualquer servidor HTTP local
-
-### 3. Acessar no navegador
-
-Abra o arquivo:
+git clone [https://github.com/maduaperes/AJAXPR.git](https://github.com/maduaperes/AJAXPR.git)
 
 ```
-index.html
+
+
+2. **Requisito de Inicialização (Servidor Local):**
+Devido às restrições de segurança do navegador relacionadas a requisições de arquivos locais (política CORS), este projeto **obrigatoriamente** requer a execução sob um servidor HTTP.
+* Utilize a extensão **Live Server** no VS Code, ou configure servidores locais como **Apache (XAMPP)**, ou rode um servidor embutido via terminal:
+```bash
+# Exemplo utilizando Python
+python -m http.server 8000
+
 ```
 
----
 
-## Requisitos
 
-* Navegador moderno (Chrome, Opera, Edge, Firefox)
-* Servidor local para evitar bloqueio de AJAX (CORS)
 
----
-
-## Limitações
-
-* Uso de banco de dados simulado (JSON)
-* Sem autenticação criptografada
-* Sem backend real
-* Dependência de execução em servidor local
+3. **Acesso ao Sistema:**
+Abra o navegador e acesse o endereço fornecido pelo seu servidor local (ex: `http://localhost:8000`).
 
 ---
 
-## Possíveis Melhorias
+## Escopo Técnico e Limitações
 
-* Implementação de backend real (Node.js, PHP ou Firebase)
-* Sistema de autenticação com JWT
-* Criptografia de senhas
-* Melhor organização de rotas
-* Responsividade aprimorada
-* Separação em arquitetura MVC
-* Uso de framework frontend (React/Vue)
+Por se tratar de um projeto de caráter estritamente didático focado no comportamento client-side, o sistema possui as seguintes características de escopo:
+
+* A gravação direta de novos registros no arquivo `db.json` via JavaScript puro possui limitações físicas no ecossistema do navegador sem uma API de backend ativa para escrita em disco (I/O).
+* O tráfego de informações de autenticação não implementa camadas de criptografia ou tokens de segurança reais (como JWT).
 
 ---
 
-## Objetivo do Projeto
+## Objetivo Educacional
 
-O objetivo do **AJAXPRDB** é demonstrar o funcionamento de:
+Este repositório cumpre o propósito de portfólio prático para consolidação de conceitos essenciais de desenvolvimento front-end, tais como:
 
-* Requisições AJAX
-* Manipulação de JSON como base de dados
-* Separação de perfis de usuário
-* Estrutura modular de aplicações web puras (Vanilla JS)
-
----
-
+* O funcionamento do modelo de requisição/resposta assíncrono em arquiteturas web.
+* Gerenciamento de fluxo de navegação e proteção básica de telas no lado do cliente.
+* Manipulação, leitura e parseamento de estruturas de dados baseadas no formato JSON.
