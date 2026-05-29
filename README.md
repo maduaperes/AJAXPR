@@ -71,67 +71,35 @@ AJAXPRDB/
 
 ## Módulos do Sistema
 
-### index.html
-Página inicial do sistema.
-
-### login.html
-Responsável pela autenticação dos usuários no sistema.
-
-### cadastro.html
-Página de registro de novos usuários.
-
-### funcionario.html
-Área destinada ao usuário com perfil de funcionário, com visualização de dados.
-
-### supervisor.html
-Painel administrativo com permissões ampliadas para gerenciamento do sistema.
-
-### erro.html
-Página exibida quando ocorre erro ou acesso inválido.
+### Páginas
+- **index.html**: Página inicial do sistema  
+- **login.html**: Autenticação de usuários  
+- **cadastro.html**: Registro de novos usuários  
+- **funcionario.html**: Área do funcionário  
+- **supervisor.html**: Painel administrativo  
+- **erro.html**: Página de erro ou acesso inválido  
 
 ---
 
 ## JavaScript
 
-### app.js
-Arquivo principal de inicialização do sistema.
-
-### login.js
-Controla autenticação de usuários e validação de login.
-
-### cadastro.js
-Responsável pelo cadastro e envio de novos usuários para o `db.json`.
-
-### funcionario.js
-Gerencia a interface e dados da área do funcionário.
-
-### supervisor.js
-Controla ações administrativas e visão do supervisor.
-
-### content loaded
-Script auxiliar responsável por inicializações automáticas após carregamento da página.
+- **app.js**: Inicialização geral do sistema  
+- **login.js**: Autenticação e validação de login  
+- **cadastro.js**: Cadastro de usuários e envio ao `db.json`  
+- **funcionario.js**: Lógica da área do funcionário  
+- **supervisor.js**: Funções do painel administrativo  
+- **content loaded**: Inicialização automática após carregamento da página  
 
 ---
 
 ## CSS
 
-### style.css
-Estilos globais do sistema.
-
-### login.css
-Estilização da página de login.
-
-### cadastro.css
-Estilos da página de cadastro.
-
-### funcionario.css
-Estilização da área do funcionário.
-
-### supervisor.css
-Estilos do painel do supervisor.
-
-### erro.css
-Estilização da página de erro.
+- **style.css**: Estilos globais  
+- **login.css**: Estilização do login  
+- **cadastro.css**: Estilização do cadastro  
+- **funcionario.css**: Estilização da área do funcionário  
+- **supervisor.css**: Estilos do painel supervisor  
+- **erro.css**: Estilização da página de erro  
 
 ---
 
