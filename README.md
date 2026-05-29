@@ -1,8 +1,8 @@
-# AJAXPRDB
+# AJAXPR
 
 ## Visão Geral
 
-O **AJAXPRDB** é um sistema web desenvolvido com HTML, CSS e JavaScript que simula um ambiente com múltiplos níveis de acesso (cadastro, login, funcionário e supervisor). O projeto utiliza um arquivo JSON como banco de dados simulado e realiza operações de leitura e escrita de dados via AJAX.
+O **AJAXPR** é um sistema web desenvolvido com HTML, CSS e JavaScript que simula um ambiente com múltiplos níveis de acesso (cadastro, login, funcionário e supervisor). O projeto utiliza um arquivo JSON como banco de dados simulado e realiza operações de leitura e escrita de dados via AJAX.
 
 O sistema é dividido em páginas independentes e scripts específicos para cada funcionalidade, permitindo uma arquitetura modular e organizada.
 
